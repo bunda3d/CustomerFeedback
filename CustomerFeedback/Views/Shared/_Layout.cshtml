@@ -12,9 +12,11 @@
 <body class="min-vh-100 d-flex flex-column justify-content-between pb-5">
   <div>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3" style="background-color: #be0f34;">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Customer Feedback</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" title="Customer Feedback">
+                  <img src="~/img/RuanLogo_white-40px.png" alt="Ruan white letters logo" height="40" />
+                  </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,7 +25,7 @@
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Surveys</a>
+                            <a class="nav-link dropdown-toggle text-light" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Surveys</a>
                           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li>
                               <a class="dropdown-item" asp-area="" asp-controller="Surveys" asp-action="Index">Surveys</a>
@@ -46,7 +48,7 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" id="navbarDDL"  role="button" data-bs-toggle="dropdown" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Customers</a>
+                            <a class="nav-link dropdown-toggle text-light" id="navbarDDL"  role="button" data-bs-toggle="dropdown" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Customers</a>
                           <ul class="dropdown-menu" aria-labelledby="navbarDDL">
                             <li>
                                 <a class="dropdown-item" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a>
@@ -69,7 +71,7 @@
 
                         
 @*                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Questions</a>
+                            <a class="nav-link dropdown-toggle text-light" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Questions</a>
                           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li>
                               <a class="dropdown-item" asp-area="" asp-controller="Questions" asp-action="Index">Questions</a>
@@ -80,7 +82,7 @@
                           </ul>
                         </li>*@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Administrators" asp-action="Index">Admin</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Administrators" asp-action="Index">Admin</a>
                         </li>
                     </ul>
                 </div>
