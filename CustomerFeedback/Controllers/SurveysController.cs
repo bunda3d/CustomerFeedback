@@ -30,18 +30,16 @@ namespace CustomerFeedback.Controllers
 
     // GET: Surveys
 
-    public async Task<IActionResult> Index(int? id, string surveyCustomerType, string searchString)
+    public async Task<IActionResult> Index(int? id, int? adminId, string surveyCustomerType, string searchString)
     {
+      _context.Survey.Include(i => i.Administrator).FirstOrDefault(i => i.Id == i.AdministratorId);
+
       // Use LINQ to get list of customerTypes.
       IQueryable<string> customerTypeQuery = from m in _context.Survey
                                              orderby m.CustomerType.Type
                                              select m.CustomerType.Type;
       var surveys = from m in _context.Survey
                     select m;
-
-      IQueryable<string> adminEmpIdQuery = from i in _context.Survey
-                                           orderby i.Administrator.NameFull
-                                           select i.Administrator.EmpId;
 
       if (!string.IsNullOrEmpty(searchString))
       {
