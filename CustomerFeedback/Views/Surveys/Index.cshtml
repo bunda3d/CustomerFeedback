@@ -73,10 +73,10 @@
             @Html.DisplayFor(modelItem => item.ExpireDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AdministratorId)
+            @Html.DisplayFor(modelItem => item.Administrator.EmpId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CustomerTypeId)
+            @Html.DisplayFor(modelItem => item.CustomerType.Description)
         </td>
             <td>
               <div class="row justify-content-between">
