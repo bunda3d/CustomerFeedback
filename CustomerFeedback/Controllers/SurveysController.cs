@@ -164,13 +164,23 @@ namespace CustomerFeedback.Controllers
 			}
 
 			var survey = await _context.Survey
-					.FirstOrDefaultAsync(m => m.Id == id);
+				.Include(i => i.CustomerType)
+				.Include(i => i.Administrator)
+				.FirstOrDefaultAsync(m => m.Id == id);
+
 			if (survey == null)
 			{
 				return NotFound();
 			}
 
-			return View(survey);
+			var surveyVM = new SurveyVM()
+			{
+				Survey = survey,
+				Administrator = survey.Administrator,
+				CustomerType = survey.CustomerType
+			};
+
+			return View(surveyVM);
 		}
 
 		// POST: Surveys/Delete/5

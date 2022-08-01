@@ -1,4 +1,5 @@
-﻿@model CustomerFeedback.Models.Survey
+﻿@*@model CustomerFeedback.Models.Survey*@
+@model CustomerFeedback.Models.ViewModels.SurveyVM
 
 @{
     ViewData["Title"] = "Delete";
@@ -10,47 +11,47 @@
 <div>
     <h4>Survey</h4>
     <hr />
-    <dl class="row">
+    <dl class="row alert-danger">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Survey.Title)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Survey.Title)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Survey.Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Survey.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDate)
+            @Html.DisplayNameFor(model => model.Survey.CreatedDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDate)
+            @Html.DisplayFor(model => model.Survey.CreatedDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ExpireDate)
+            @Html.DisplayNameFor(model => model.Survey.ExpireDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ExpireDate)
+            @Html.DisplayFor(model => model.Survey.ExpireDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AdministratorId)
+            @Html.DisplayNameFor(model => model.Survey.AdministratorId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AdministratorId)
+            @Html.DisplayFor(model => model.Administrator.NameFull)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CustomerTypeId)
+            @Html.DisplayNameFor(model => model.Survey.CustomerTypeId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CustomerTypeId)
+            @Html.DisplayFor(model => model.CustomerTypeAndDescription)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="@Model.Survey.Id" />
         <a asp-action="Index" class="btn btn-labeled btn-secondary my-3"><span class="btn-label me-3"><i class="fa fa-chevron-left"></i></span>Back to List</a> |
         <input type="submit" value="Delete" class="btn btn-danger my-3" />
     </form>
