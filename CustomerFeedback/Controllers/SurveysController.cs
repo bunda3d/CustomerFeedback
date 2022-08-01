@@ -30,26 +30,20 @@ namespace CustomerFeedback.Controllers
 
 		// GET: Surveys
 
-		public async Task<IActionResult> Index(int? id, int? adminId, string surveyCustomerType, string searchString)
+		public async Task<IActionResult> Index(int? id, string surveyCustomerType, string searchString)
 		{
-			_context.Survey.Include(i => i.Administrator).FirstOrDefault(i => i.AdministratorId == i.Administrator.Id);
-			_context.Survey.Include(i => i.CustomerType).FirstOrDefault(i => i.CustomerTypeId == i.CustomerType.Id);
+			//_context.Survey.Include(i => i.Administrator).FirstOrDefault(i => i.AdministratorId == i.Administrator.Id);
+			//_context.Survey.Include(i => i.CustomerType).FirstOrDefault(i => i.CustomerTypeId == i.CustomerType.Id);
 
 			// Use LINQ to get list of customerTypes.
-			IQueryable<string> customerTypeQuery = from m in _context.Survey
-																						 orderby m.CustomerType.Type
-																						 select m.CustomerType.Type;
-			IQueryable<string> surveyAdministratorsQuery = from m in _context.Survey
-																										 orderby m.Administrator.EmpId
-																										 select m.Administrator.EmpId;
-			//var surveyRelatedData = from s in _context.Survey
-			//												join a in _context.Administrator
-			//												on s.AdministratorId equals a.Id
-			//												select a;
-			var surveys = from m in _context.Survey
-										.Include(i => i.Administrator)
+			IQueryable<string> customerTypeQuery = from s in _context.Survey
+																					.Include(i => i.CustomerType)
+																					orderby s.CustomerType.Type
+																					select s.CustomerType.Description;
+			var surveys = from s in _context.Survey
 										.Include(i => i.CustomerType)
-										select m;
+										.Include(i => i.Administrator)
+										select s;
 
 			if (!string.IsNullOrEmpty(searchString))
 			{
@@ -58,15 +52,13 @@ namespace CustomerFeedback.Controllers
 
 			if (!string.IsNullOrEmpty(surveyCustomerType))
 			{
-				surveys = surveys.Where(x => x.CustomerType.Type == surveyCustomerType);
+				surveys = surveys.Where(x => x.CustomerType.Description == surveyCustomerType);
 			}
 
 			var surveyVM = new SurveyVM
 			{
-				SurveyAdministrators = new SelectList(await surveyAdministratorsQuery.Distinct().ToListAsync()),
 				CustomerTypes = new SelectList(await customerTypeQuery.Distinct().ToListAsync()),
 				Surveys = await surveys.ToListAsync(),
-				//SurveyAdministrator = surveys.FirstOrDefault().ToString()
 			};
 
 			return View(surveyVM);

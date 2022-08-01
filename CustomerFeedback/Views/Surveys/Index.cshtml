@@ -16,12 +16,12 @@
     <form asp-controller="Surveys" asp-action="Index" method="get">
       <div class="row">
         <div class="col">
-          <select asp-for="SurveyCustomerType" asp-items="Model?.CustomerTypes" class="form-control my-2">
-            <option value="">All Types</option>
+          <select asp-for="SurveyCustomerType" asp-items="Model.CustomerTypes" class="form-control my-2">
+            <option value="">All Customer Types</option>
           </select>
         </div>
         <div class="col">
-          <input type="text" name="SearchString" class="form-control my-2" placeholder="Search Survey Title" />
+          <input type="text" asp-for="SearchString" name="SearchString" class="form-control my-2" placeholder="Search Survey Title" />
         </div>
         <div class="col-2">
             <input type ="submit" value="Filter" class="btn btn-secondary my-2"/>
@@ -76,7 +76,7 @@
             @Html.DisplayFor(modelItem => item.Administrator.EmpId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CustomerType.Description)
+            @Html.DisplayFor(modelItem => item.CustomerType.Type)
         </td>
             <td>
               <div class="row justify-content-between">
