@@ -23,23 +23,13 @@ namespace CustomerFeedback.Controllers
 		}
 
 		// GET: Surveys
-		//public async Task<IActionResult> Index()
-		//{
-		//  return View(await _context.Survey.ToListAsync());
-		//}
-
-		// GET: Surveys
-
 		public async Task<IActionResult> Index(int? id, string surveyCustomerType, string searchString)
 		{
-			//_context.Survey.Include(i => i.Administrator).FirstOrDefault(i => i.AdministratorId == i.Administrator.Id);
-			//_context.Survey.Include(i => i.CustomerType).FirstOrDefault(i => i.CustomerTypeId == i.CustomerType.Id);
-
 			// Use LINQ to get list of customerTypes.
 			IQueryable<string> customerTypeQuery = from s in _context.Survey
 																					.Include(i => i.CustomerType)
-																					orderby s.CustomerType.Type
-																					select s.CustomerType.Description;
+																						 orderby s.CustomerType.Type
+																						 select s.CustomerType.Description;
 			var surveys = from s in _context.Survey
 										.Include(i => i.CustomerType)
 										.Include(i => i.Administrator)
@@ -73,13 +63,23 @@ namespace CustomerFeedback.Controllers
 			}
 
 			var survey = await _context.Survey
-					.FirstOrDefaultAsync(m => m.Id == id);
+				.Include(i => i.CustomerType)
+				.Include(i => i.Administrator)
+				.FirstOrDefaultAsync(m => m.Id == id);
+
 			if (survey == null)
 			{
 				return NotFound();
 			}
 
-			return View(survey);
+			var surveyVM = new SurveyVM()
+			{
+				Survey = survey,
+				Administrator = survey.Administrator,
+				CustomerType = survey.CustomerType
+			};
+
+			return View(surveyVM);
 		}
 
 		// GET: Surveys/Create

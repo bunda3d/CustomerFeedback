@@ -10,5 +10,10 @@ namespace CustomerFeedback.Models.ViewModels
 		public SelectList? CustomerTypes { get; set; }
 		public string? SurveyCustomerType { get; set; }
 		public string? SearchString { get; set; }
+
+		public Survey Survey { get; set; }
+		public Administrator Administrator { get; set; }
+		public CustomerType CustomerType { get; set; }
+		public string? CustomerTypeAndDescription { get { return $"{CustomerType.Type} - {CustomerType.Description}"; } }
 	}
 }
