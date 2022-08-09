@@ -27,7 +27,7 @@ namespace CustomerFeedback.Controllers
 		{
 			// Use LINQ to get list of customerTypes.
 			IQueryable<string> customerTypeQuery = from s in _context.Survey
-																					.Include(i => i.CustomerType)
+																						 .Include(i => i.CustomerType)
 																						 orderby s.CustomerType.Type
 																						 select s.CustomerType.Description;
 			var surveys = from s in _context.Survey
@@ -48,7 +48,7 @@ namespace CustomerFeedback.Controllers
 			var surveyVM = new SurveyVM
 			{
 				CustomerTypes = new SelectList(await customerTypeQuery.Distinct().ToListAsync()),
-				Surveys = await surveys.ToListAsync(),
+				Surveys = await surveys.ToListAsync()
 			};
 
 			return View(surveyVM);
@@ -85,6 +85,8 @@ namespace CustomerFeedback.Controllers
 		// GET: Surveys/Create
 		public IActionResult Create()
 		{
+			PopulateAdministratorsDDL();
+			PopulateCustomerTypesDDL();
 			return View();
 		}
 
@@ -95,12 +97,15 @@ namespace CustomerFeedback.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("Id,Title,Description,CreatedDate,ExpireDate,AdministratorId,CustomerTypeId")] Survey survey)
 		{
+
 			if (ModelState.IsValid)
 			{
 				_context.Add(survey);
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
+			PopulateAdministratorsDDL(survey.AdministratorId);
+			PopulateCustomerTypesDDL(survey.CustomerTypeId);
 			return View(survey);
 		}
 
@@ -117,6 +122,8 @@ namespace CustomerFeedback.Controllers
 			{
 				return NotFound();
 			}
+			PopulateAdministratorsDDL(survey.AdministratorId);
+			PopulateCustomerTypesDDL(survey.CustomerTypeId);
 			return View(survey);
 		}
 
@@ -152,6 +159,8 @@ namespace CustomerFeedback.Controllers
 				}
 				return RedirectToAction(nameof(Index));
 			}
+			PopulateAdministratorsDDL(survey.AdministratorId);
+			PopulateCustomerTypesDDL(survey.CustomerTypeId);
 			return View(survey);
 		}
 
@@ -197,6 +206,21 @@ namespace CustomerFeedback.Controllers
 		private bool SurveyExists(int id)
 		{
 			return _context.Survey.Any(e => e.Id == id);
+		}
+
+		private void PopulateAdministratorsDDL(object selectedAdministrator = null)
+		{
+			var administratorsQuery = from x in _context.Administrator
+																orderby x.EmpId
+																select x;
+			ViewBag.AdministratorId = new SelectList(administratorsQuery.AsNoTracking(), "Id", "EmpId", selectedAdministrator);
+		}
+		private void PopulateCustomerTypesDDL(object selectedCustomerType = null)
+		{
+			var customerTypesQuery = from x in _context.CustomerType
+																orderby x.Description
+																select x;
+			ViewBag.CustomerTypeId = new SelectList(customerTypesQuery.AsNoTracking(), "Id", "Description", selectedCustomerType);
 		}
 	}
 }
